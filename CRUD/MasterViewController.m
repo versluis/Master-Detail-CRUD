@@ -109,17 +109,24 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-        NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-        self.detailViewController.detailItem = object;
+        Phrase *detailPhrase = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+        self.detailViewController.detailPhrase = detailPhrase;
     }
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([[segue identifier] isEqualToString:@"showDetail"]) {
+    if ([segue.identifier isEqualToString:@"showDetail"]) {
+//        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+//        NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+//        [[segue destinationViewController] setDetailItem:object];
+        
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-        [[segue destinationViewController] setDetailItem:object];
+        Phrase *detailPhrase = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        DetailViewController *detailView = [[DetailViewController alloc]init];
+        detailView = segue.destinationViewController;
+        detailView.detailPhrase = detailPhrase;
+        detailView.delegate = self;
     }
     
     if ([segue.identifier isEqualToString:@"addPhrase"]) {
@@ -245,7 +252,7 @@
 }
 
 
-#pragma mark - AddPhraseViewController Delegate
+#pragma mark - AddPhraseViewController and DetailView Delegates
 
 - (void)addPhraseViewControllerSave {
     
@@ -262,5 +269,10 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (void)detailViewDidSave:(Phrase *)thisPhrase {
+    
+    [self.managedObjectContext save:nil];
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 @end

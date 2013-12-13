@@ -7,10 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Phrase.h"
 
+@protocol DetailViewDelegate;
 @interface DetailViewController : UIViewController <UISplitViewControllerDelegate>
 
-@property (strong, nonatomic) id detailItem;
+@property (strong, nonatomic) Phrase *detailPhrase;
+@property (weak, nonatomic) id <DetailViewDelegate> delegate;
 
-@property (weak, nonatomic) IBOutlet UILabel *detailDescriptionLabel;
+@end
+
+
+@protocol DetailViewDelegate
+
+- (void)detailViewDidSave:(Phrase *)thisPhrase;
+
 @end
