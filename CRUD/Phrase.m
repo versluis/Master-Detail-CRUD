@@ -16,4 +16,10 @@
 @dynamic pitch;
 @dynamic rate;
 
+- (void)awakefrom {
+    
+    [super awakeFromFetch];
+    // add custom behaviour here
+}
+
 @end

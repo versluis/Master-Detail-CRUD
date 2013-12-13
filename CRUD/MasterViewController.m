@@ -9,6 +9,7 @@
 #import "MasterViewController.h"
 #import "DetailViewController.h"
 #import "Phrase.h"
+#import "AddPhraseViewController.h"
 
 @interface MasterViewController ()
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
@@ -28,11 +29,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+	// edit button
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
 
-    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
-    self.navigationItem.rightBarButtonItem = addButton;
     self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
 }
 
@@ -121,6 +120,21 @@
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
         [[segue destinationViewController] setDetailItem:object];
+    }
+    
+    if ([segue.identifier isEqualToString:@"addPhrase"]) {
+        
+        // grab reference to new controller
+        // set delegate to self
+        AddPhraseViewController *controller = [[AddPhraseViewController alloc]init];
+        controller = segue.destinationViewController;
+        controller.delegate = self;
+        
+        // create new Phrase and pass it over
+        NSEntityDescription *entity = [[self.fetchedResultsController fetchRequest] entity];
+        Phrase *newPhrase = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:self.managedObjectContext];
+        controller.detailPhrase = newPhrase;
+        
     }
 }
 
@@ -229,5 +243,24 @@
     cell.textLabel.text = currentPhrase.text;
     cell.detailTextLabel.text = currentPhrase.voice;
 }
+
+
+#pragma mark - AddPhraseViewController Delegate
+
+- (void)addPhraseViewControllerSave {
+    
+    // save context and dismiss
+    [self.managedObjectContext save:nil];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)addPhraseViewControllerCancel:(Phrase *)thisPhrase {
+    
+    // delete phrase and dismiss
+    [self.managedObjectContext deleteObject:thisPhrase];
+    [self.managedObjectContext save:nil];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 
 @end
