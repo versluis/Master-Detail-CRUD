@@ -26,8 +26,8 @@
 		D2CBCD51185B776C00A5FD11 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2CBCD29185B776C00A5FD11 /* CoreData.framework */; };
 		D2CBCD59185B776C00A5FD11 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D2CBCD57185B776C00A5FD11 /* InfoPlist.strings */; };
 		D2CBCD5B185B776C00A5FD11 /* CRUDTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D2CBCD5A185B776C00A5FD11 /* CRUDTests.m */; };
-		D2CBCD66185B77E300A5FD11 /* Phrase.m in Sources */ = {isa = PBXBuildFile; fileRef = D2CBCD65185B77E300A5FD11 /* Phrase.m */; };
 		D2CBCD69185B7D1600A5FD11 /* AddPhraseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D2CBCD68185B7D1600A5FD11 /* AddPhraseViewController.m */; };
+		D2CBCD6C185BC17E00A5FD11 /* Phrase.m in Sources */ = {isa = PBXBuildFile; fileRef = D2CBCD6B185BC17E00A5FD11 /* Phrase.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,10 +65,10 @@
 		D2CBCD56185B776C00A5FD11 /* CRUDTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CRUDTests-Info.plist"; sourceTree = "<group>"; };
 		D2CBCD58185B776C00A5FD11 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D2CBCD5A185B776C00A5FD11 /* CRUDTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CRUDTests.m; sourceTree = "<group>"; };
-		D2CBCD64185B77E300A5FD11 /* Phrase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Phrase.h; sourceTree = "<group>"; };
-		D2CBCD65185B77E300A5FD11 /* Phrase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Phrase.m; sourceTree = "<group>"; };
 		D2CBCD67185B7D1600A5FD11 /* AddPhraseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddPhraseViewController.h; sourceTree = "<group>"; };
 		D2CBCD68185B7D1600A5FD11 /* AddPhraseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddPhraseViewController.m; sourceTree = "<group>"; };
+		D2CBCD6A185BC17E00A5FD11 /* Phrase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Phrase.h; sourceTree = "<group>"; };
+		D2CBCD6B185BC17E00A5FD11 /* Phrase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Phrase.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,9 +140,9 @@
 				D2CBCD43185B776C00A5FD11 /* DetailViewController.h */,
 				D2CBCD44185B776C00A5FD11 /* DetailViewController.m */,
 				D2CBCD46185B776C00A5FD11 /* Images.xcassets */,
+				D2CBCD6A185BC17E00A5FD11 /* Phrase.h */,
+				D2CBCD6B185BC17E00A5FD11 /* Phrase.m */,
 				D2CBCD3D185B776C00A5FD11 /* CRUD.xcdatamodeld */,
-				D2CBCD64185B77E300A5FD11 /* Phrase.h */,
-				D2CBCD65185B77E300A5FD11 /* Phrase.m */,
 				D2CBCD67185B7D1600A5FD11 /* AddPhraseViewController.h */,
 				D2CBCD68185B7D1600A5FD11 /* AddPhraseViewController.m */,
 				D2CBCD2C185B776C00A5FD11 /* Supporting Files */,
@@ -279,9 +279,9 @@
 			files = (
 				D2CBCD45185B776C00A5FD11 /* DetailViewController.m in Sources */,
 				D2CBCD42185B776C00A5FD11 /* MasterViewController.m in Sources */,
+				D2CBCD6C185BC17E00A5FD11 /* Phrase.m in Sources */,
 				D2CBCD36185B776C00A5FD11 /* AppDelegate.m in Sources */,
 				D2CBCD3F185B776C00A5FD11 /* CRUD.xcdatamodeld in Sources */,
-				D2CBCD66185B77E300A5FD11 /* Phrase.m in Sources */,
 				D2CBCD32185B776C00A5FD11 /* main.m in Sources */,
 				D2CBCD69185B7D1600A5FD11 /* AddPhraseViewController.m in Sources */,
 			);

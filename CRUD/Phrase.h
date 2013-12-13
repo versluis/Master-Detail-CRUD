@@ -16,5 +16,6 @@
 @property (nonatomic, retain) NSString * voice;
 @property (nonatomic, retain) NSNumber * pitch;
 @property (nonatomic, retain) NSNumber * rate;
+@property (nonatomic, retain) NSNumber * position;
 
 @end

@@ -15,11 +15,6 @@
 @dynamic voice;
 @dynamic pitch;
 @dynamic rate;
-
-- (void)awakefrom {
-    
-    [super awakeFromFetch];
-    // add custom behaviour here
-}
+@dynamic position;
 
 @end

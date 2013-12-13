@@ -117,12 +117,10 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"showDetail"]) {
-//        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-//        NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-//        [[segue destinationViewController] setDetailItem:object];
         
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         Phrase *detailPhrase = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        detailPhrase.position = [NSNumber numberWithInt:indexPath.row];
         DetailViewController *detailView = [[DetailViewController alloc]init];
         detailView = segue.destinationViewController;
         detailView.detailPhrase = detailPhrase;
@@ -162,7 +160,7 @@
     [fetchRequest setFetchBatchSize:20];
     
     // Edit the sort key as appropriate.
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"text" ascending:YES];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"position" ascending:YES];
     NSArray *sortDescriptors = @[sortDescriptor];
     
     [fetchRequest setSortDescriptors:sortDescriptors];

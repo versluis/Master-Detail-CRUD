@@ -144,6 +144,8 @@
          
          */
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        NSLog(@"Deleting store file - please launch again ;-)");
+        [[NSFileManager defaultManager] removeItemAtURL:storeURL error:nil];
         abort();
     }    
     
