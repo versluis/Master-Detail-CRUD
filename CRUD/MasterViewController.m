@@ -33,6 +33,8 @@
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
 
     self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
+    // [self rebuildPositionIndex];
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -103,7 +105,7 @@
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // The table view should not be re-orderable.
-    return NO;
+    return YES;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -114,13 +116,33 @@
     }
 }
 
+- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
+    
+    // all we need to do here is to grab both Phrases and swap their positions
+    // re-fetch data, then refresh the table view
+    
+    Phrase *sourcePhrase = [self.fetchedResultsController objectAtIndexPath:sourceIndexPath];
+    Phrase *destinationPhrase = [self.fetchedResultsController objectAtIndexPath:destinationIndexPath];
+    
+    NSNumber *sourcePosition = sourcePhrase.position;
+    NSNumber *destinationPosition = destinationPhrase.position;
+    
+    sourcePhrase.position = destinationPosition;
+    destinationPhrase.position = sourcePosition;
+    
+    [self.managedObjectContext save:nil];
+    
+    // manually move items
+
+}
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"showDetail"]) {
         
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         Phrase *detailPhrase = [self.fetchedResultsController objectAtIndexPath:indexPath];
-        detailPhrase.position = [NSNumber numberWithInt:indexPath.row];
+        
         DetailViewController *detailView = [[DetailViewController alloc]init];
         detailView = segue.destinationViewController;
         detailView.detailPhrase = detailPhrase;
@@ -129,8 +151,10 @@
     
     if ([segue.identifier isEqualToString:@"addPhrase"]) {
         
-        // grab reference to new controller
-        // set delegate to self
+        // update position index
+        [self rebuildPositionIndex];
+        
+        // grab reference to new controller, set delegate to self
         AddPhraseViewController *controller = [[AddPhraseViewController alloc]init];
         controller = segue.destinationViewController;
         controller.delegate = self;
@@ -138,6 +162,11 @@
         // create new Phrase and pass it over
         NSEntityDescription *entity = [[self.fetchedResultsController fetchRequest] entity];
         Phrase *newPhrase = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:self.managedObjectContext];
+        
+        // add new position index
+        NSNumber *newPosition = [NSNumber numberWithInt:[[self.fetchedResultsController fetchedObjects]count]];
+        newPhrase.position = newPosition;
+        
         controller.detailPhrase = newPhrase;
         
     }
@@ -181,6 +210,8 @@
     
     return _fetchedResultsController;
 }    
+
+/*
 
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
 {
@@ -226,27 +257,50 @@
             break;
     }
 }
-
+ 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
     [self.tableView endUpdates];
 }
+*/
 
-/*
+
+
 // Implementing the above methods to update the table view in response to individual changes may have performance implications if a large number of changes are made simultaneously. If this proves to be an issue, you can instead just implement controllerDidChangeContent: which notifies the delegate that all section and object changes have been processed. 
  
- - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
     // In the simplest, most efficient, case, reload the table view.
+    [self.fetchedResultsController performFetch:nil];
     [self.tableView reloadData];
 }
- */
+ 
+- (void)tableView:(UITableView *)tableView didEndEditingRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    // table view is done editing - let's rebuild the index
+    [self rebuildPositionIndex];
+}
+
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
     Phrase *currentPhrase = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell.textLabel.text = currentPhrase.text;
+    NSString *title = [NSString stringWithFormat:@"%@ (%@)", currentPhrase.text, currentPhrase.position];
+    cell.textLabel.text = title;
     cell.detailTextLabel.text = currentPhrase.voice;
+}
+
+- (void)rebuildPositionIndex {
+    
+    // loop through all objects and re-number object.position, according to the indexPath
+    int i = 0;
+    for (Phrase *currentPhrase in [self.fetchedResultsController fetchedObjects]) {
+        
+        NSNumber *thePosition = [NSNumber numberWithInt:i];
+        currentPhrase.position = thePosition;
+        i++;
+    }
+    [self.managedObjectContext save:nil];
 }
 
 
