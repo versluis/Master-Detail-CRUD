@@ -164,7 +164,7 @@
         Phrase *newPhrase = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:self.managedObjectContext];
         
         // add new position index
-        NSNumber *newPosition = [NSNumber numberWithInt:[[self.fetchedResultsController fetchedObjects]count]];
+        NSNumber *newPosition = [NSNumber numberWithInt:(int)[[self.fetchedResultsController fetchedObjects]count]];
         newPhrase.position = newPosition;
         
         controller.detailPhrase = newPhrase;
