@@ -124,22 +124,23 @@
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
     
-    // all we need to do here is to grab both Phrases and swap their positions
-    // re-fetch data, then refresh the table view
+    // move items to an array for re-indexing, then put them back to Core Data
+    // http://www.cimgf.com/2010/06/05/re-ordering-nsfetchedresultscontroller/
     
-    Phrase *sourcePhrase = [self.fetchedResultsController objectAtIndexPath:sourceIndexPath];
-    Phrase *destinationPhrase = [self.fetchedResultsController objectAtIndexPath:destinationIndexPath];
+    // put items into an array
+    NSMutableArray *allPhrases = [[self.fetchedResultsController fetchedObjects]mutableCopy];
     
-    NSNumber *sourcePosition = sourcePhrase.position;
-    NSNumber *destinationPosition = destinationPhrase.position;
+    // grab item we're moving - remove it and re-instert it
+    Phrase *movingItem = [self.fetchedResultsController objectAtIndexPath:sourceIndexPath];
+    [allPhrases removeObject:movingItem];
+    [allPhrases insertObject:movingItem atIndex:destinationIndexPath.row];
     
-    sourcePhrase.position = destinationPosition;
-    destinationPhrase.position = sourcePosition;
-    
+    int i = 0;
+    for (Phrase *currentPhrase in allPhrases) {
+        currentPhrase.position = [NSNumber numberWithInt:i];
+        i++;
+    }
     [self.managedObjectContext save:nil];
-    
-    // manually move items
-
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -156,9 +157,6 @@
     }
     
     if ([segue.identifier isEqualToString:@"addPhrase"]) {
-        
-        // update position index
-        [self rebuildPositionIndex];
         
         // grab reference to new controller, set delegate to self
         AddPhraseViewController *controller = [[AddPhraseViewController alloc]init];
@@ -280,12 +278,6 @@
     [self.fetchedResultsController performFetch:nil];
     [self.tableView reloadData];
 }
- 
-- (void)tableView:(UITableView *)tableView didEndEditingRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    // table view is done editing - let's rebuild the index
-    [self rebuildPositionIndex];
-}
 
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
@@ -294,19 +286,6 @@
     NSString *title = [NSString stringWithFormat:@"%@ (%@)", currentPhrase.text, currentPhrase.position];
     cell.textLabel.text = title;
     cell.detailTextLabel.text = currentPhrase.voice;
-}
-
-- (void)rebuildPositionIndex {
-    
-    // loop through all objects and re-number object.position, according to the indexPath
-    int i = 0;
-    for (Phrase *currentPhrase in [self.fetchedResultsController fetchedObjects]) {
-        
-        NSNumber *thePosition = [NSNumber numberWithInt:i];
-        currentPhrase.position = thePosition;
-        i++;
-    }
-    [self.managedObjectContext save:nil];
 }
 
 

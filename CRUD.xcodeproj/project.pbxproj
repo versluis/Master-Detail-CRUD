@@ -28,6 +28,7 @@
 		D2CBCD5B185B776C00A5FD11 /* CRUDTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D2CBCD5A185B776C00A5FD11 /* CRUDTests.m */; };
 		D2CBCD69185B7D1600A5FD11 /* AddPhraseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D2CBCD68185B7D1600A5FD11 /* AddPhraseViewController.m */; };
 		D2CBCD72185C03F900A5FD11 /* Phrase.m in Sources */ = {isa = PBXBuildFile; fileRef = D2CBCD71185C03F900A5FD11 /* Phrase.m */; };
+		D2FC2FA8187628B200E23306 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = D2FC2FA7187628B200E23306 /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +70,7 @@
 		D2CBCD68185B7D1600A5FD11 /* AddPhraseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddPhraseViewController.m; sourceTree = "<group>"; };
 		D2CBCD70185C03F900A5FD11 /* Phrase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Phrase.h; sourceTree = "<group>"; };
 		D2CBCD71185C03F900A5FD11 /* Phrase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Phrase.m; sourceTree = "<group>"; };
+		D2FC2FA7187628B200E23306 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -153,6 +155,7 @@
 		D2CBCD2C185B776C00A5FD11 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				D2FC2FA7187628B200E23306 /* README.md */,
 				D2CBCD2D185B776C00A5FD11 /* CRUD-Info.plist */,
 				D2CBCD2E185B776C00A5FD11 /* InfoPlist.strings */,
 				D2CBCD31185B776C00A5FD11 /* main.m */,
@@ -257,6 +260,7 @@
 			files = (
 				D2CBCD3C185B776C00A5FD11 /* Main_iPad.storyboard in Resources */,
 				D2CBCD47185B776C00A5FD11 /* Images.xcassets in Resources */,
+				D2FC2FA8187628B200E23306 /* README.md in Resources */,
 				D2CBCD39185B776C00A5FD11 /* Main_iPhone.storyboard in Resources */,
 				D2CBCD30185B776C00A5FD11 /* InfoPlist.strings in Resources */,
 			);
@@ -502,6 +506,7 @@
 				D2CBCD60185B776C00A5FD11 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D2CBCD61185B776C00A5FD11 /* Build configuration list for PBXNativeTarget "CRUDTests" */ = {
 			isa = XCConfigurationList;
@@ -510,6 +515,7 @@
 				D2CBCD63185B776C00A5FD11 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
