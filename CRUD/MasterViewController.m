@@ -99,6 +99,9 @@
             NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
             abort();
         }
+        
+        // fix for Edit/Done button
+        [self setEditing:NO animated:YES];
     }   
 }
 
